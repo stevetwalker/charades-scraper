@@ -55,6 +55,3 @@ def give_charade(room):
     charade = [charade.charade for charade in charade][0]
 
     return charade, countdown - 1
-
-create_charades('co0co', 12)
-give_charade('co0co')
