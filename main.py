@@ -54,8 +54,8 @@ def next_turn(room):
     return render_template('next-turn.jinja2', room=session['room'])
 
 if __name__ == "__main__":
-    db.connect(os.environ.get('DATABASE_URL', 'sqlite:///my_database.db'))
-    db.drop_tables([Charades])
-    db.create_tables([Charades])
+#    db.connect(os.environ.get('DATABASE_URL', 'sqlite:///my_database.db'))
+#    db.drop_tables([Charades])
+#    db.create_tables([Charades])
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
