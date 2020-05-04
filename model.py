@@ -16,4 +16,4 @@ class Rooms(BaseModel):
 class Charades(BaseModel):
     charade = CharField(max_length=255)
     guessed = BooleanField(default=False)
-    room = ForeignKeyField(Rooms, null=False)
+    room = CharField(max_length=255)
