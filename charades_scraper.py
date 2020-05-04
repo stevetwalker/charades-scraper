@@ -28,7 +28,6 @@ def create_charades(room, number):
                 charade = Charades(room=room, charade=charade)
                 charade.save()
         except:
-            print(exception)
             pass
 
 def give_charade(room):
@@ -37,8 +36,6 @@ def give_charade(room):
     # Count how many unguessed charades remain
     countdown = Charades.select()\
         .where(Charades.room == room, Charades.guessed == False).count()
-
-    print([x.charade for x in Charades.select().where(Charades.room == room, Charades.guessed == False)])
 
     # If no unguessed charade remain, reset all charades to guessed=False
     if countdown == 0:
