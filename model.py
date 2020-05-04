@@ -9,6 +9,7 @@ class BaseModel(Model):
     class Meta:
         database = db
 
+# Currently unused
 class Rooms(BaseModel):
     name = CharField(max_length=255, unique=True)
 
