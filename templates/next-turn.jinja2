@@ -1,0 +1,9 @@
+{% extends 'base.jinja2' %}
+
+{% block header %}Ready?{% endblock header %}
+
+{% block content %}
+    <form method="POST" action="{{ url_for('play', room=session['room']) }}">
+        <input type="submit" name="btn" value="Start turn">
+    </form><p>
+{% endblock content %}

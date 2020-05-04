@@ -1,0 +1,14 @@
+{% extends 'base.jinja2' %}
+
+{% block header %}{{ charade }}{% endblock header %}
+
+{% block content %}
+    Clues remaining this round: {{ countdown }}<p>
+    {{ request }}
+    <form method="POST">
+        <input type="submit" name="btn" value="Next clue">
+    </form><p>
+    <form method="POST" action="{{ url_for('next_turn', room=session['room']) }}">
+        <input type="submit" name="btn" value="End turn">
+    </form>
+{% endblock content %}
