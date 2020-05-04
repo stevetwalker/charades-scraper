@@ -55,6 +55,6 @@ def next_turn(room):
 if __name__ == "__main__":
     db.connect()
     db.execute_sql('PRAGMA foreign_keys = ON;')
-    db.create_tables([Rooms, Charades])
+    db.create_tables([Charades])
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
