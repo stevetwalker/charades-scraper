@@ -17,14 +17,28 @@ app.secret_key = os.environ.get('SECRET_KEY').encode()
 def start():
     """Get game parameters (room name and number of clues) and populate DB."""
     if request.method == 'POST':
-        session['room'] = request.form['room']
-        if Charades.get_or_none(Charades.room == session['room']) is not None:
-            return render_template('start.jinja2', room_exists_error="Room already exists.")
+        # If tried to join a room... (fails if request.form['join-room'] doesn't exist
+        try:
+            # Raise no_room_error if the room doesn't exist
+            if Charades.get_or_none(Charades.room == request.form['join-room']) is None:
+                return render_template('start.jinja2', no_room_error="Room does not exist.")
+            # Otherwise join game
+            else:
+                session['room'] = request.form['join-room']
+                return redirect(url_for('next_turn', room=session['room']))
 
-        else:
-            charades_scraper.create_charades(request.form['room'],
-                                             int(request.form['number']))
-            return redirect(url_for('next_turn', room=session['room']))
+        # If tried to create a new game...
+        except:
+            # Raise room_exists_error if the room already exists
+            room = request.form['new-room']
+            if Charades.get_or_none(Charades.room == room) is not None:
+                return render_template('start.jinja2', room_exists_error="Room already exists.")
+            # Otherwise initialize the game and join it
+            else:
+                session['room'] = room
+                charades_scraper.create_charades(room,
+                                                 int(request.form['number']))
+                return redirect(url_for('next_turn', room=session['room']))
 
     return render_template('start.jinja2', session=session, error=None)
 
@@ -49,13 +63,8 @@ def play(room):
 @app.route('/next-turn/<room>', methods=['GET', 'POST'])
 def next_turn(room):
     """Show a holding screen until the player begins their turn."""
-    if Charades.get_or_none(Charades.room == room) is None:
-        return redirect(url_for('start', no_room_error="Room does not exist."))
     return render_template('next-turn.jinja2', room=session['room'])
 
 if __name__ == "__main__":
-#    db.connect(os.environ.get('DATABASE_URL', 'sqlite:///my_database.db'))
-#    db.drop_tables([Charades])
-#    db.create_tables([Charades])
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)

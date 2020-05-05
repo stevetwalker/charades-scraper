@@ -4,14 +4,14 @@
 
 {% block content %}
 <h3>Enter existing room</h3>
-<form method="POST" action="{{ url_for('next_turn', room=session['room']) }}">
-    <label for="room">Room: </label><input type="text" id="room" name="room"><p>
+<form method="POST">
+    <label for="join-room">Room: </label><input type="text" id="room" name="join-room"><p>
     {% if no_room_error %}<span class="error">{{ no_room_error }}<p>{% endif %}
     <input type="submit" name="btn" value="Enter the room!">
 </form><br><br>
 <h3>Create new room</h3>
 <form method="POST">
-    <label for="room">Room: </label><input type="text" id="room" name="room"><p>
+    <label for="new-room">Room: </label><input type="text" id="room" name="new-room"><p>
     {% if room_exists_error %}<span class="error">{{ room_exists_error }}<p>{% endif %}
     <label for="number">Number of clues: </label><input type="number" id="number" name="number"><p>
     <input type="submit" name="btn" value="Start the game!">
