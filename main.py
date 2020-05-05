@@ -17,7 +17,8 @@ app.secret_key = os.environ.get('SECRET_KEY').encode()
 def start():
     """Get game parameters (room name and number of clues) and populate DB."""
     if request.method == 'POST':
-        # If tried to join a room... (fails if request.form['join-room'] doesn't exist
+        # If tried to join a room...
+                # This fails if request.form['join-room'] doesn't exist
         try:
             # Raise no_room_error if the room doesn't exist
             if Charades.get_or_none(Charades.room == request.form['join-room']) is None:
